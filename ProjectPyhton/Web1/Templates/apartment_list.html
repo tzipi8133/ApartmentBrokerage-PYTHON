@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>רשימת דירות</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            direction: rtl;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+
+        .filter-form {
+            padding: 20px;
+            background-color: #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-form input,
+        .filter-form select,
+        .filter-form button {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .filter-form input,
+        .filter-form select {
+            width: 30%;
+        }
+
+        .filter-form button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 12%;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-form button:hover {
+            background-color: #2ecc71;
+        }
+
+        .apartment-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .apartment-card {
+            background-color: white;
+            width: 280px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .apartment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .apartment-card h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .apartment-card p {
+            font-size: 1em;
+            margin: 5px 0;
+            color: #7f8c8d;
+        }
+
+        .apartment-card img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .brokerage, .no-brokerage {
+            padding: 5px 12px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 12px;
+            color: white;
+        }
+
+        .brokerage {
+            background-color: #2ecc71;
+        }
+
+        .no-brokerage {
+            background-color: #e74c3c;
+        }
+
+        .apartment-card button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 18px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .apartment-card button:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #ecf0f1;
+            color: #7f8c8d;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>רשימת דירות</h1>
+    </header>
+
+    <div class="filter-form">
+        <form method="GET" action="{% url 'apartment_list' %}">
+            <input type="text" id="city" name="city" value="{{ request.GET.city }}" placeholder="עיר">
+            <input type="text" id="street" name="street" value="{{ request.GET.street }}" placeholder="רחוב">
+            <input type="number" id="room_num" name="room_num" value="{{ request.GET.room_num }}" placeholder="חדרים">
+
+            <select id="condition" name="condition">
+                <option value="">מצב</option>
+                <option value="חדש" {% if request.GET.condition == 'חדש' %}selected{% endif %}>חדש</option>
+                <option value="משופץ" {% if request.GET.condition == 'משופץ' %}selected{% endif %}>משופץ</option>
+                <option value="ישן" {% if request.GET.condition == 'ישן' %}selected{% endif %}>ישן</option>
+            </select>
+            <button type="submit">חפש</button>
+        </form>
+    </div>
+
+    <div class="apartment-list">
+        {% for apartment in apartments %}
+            <div class="apartment-card">
+                <h2>{{ apartment.city }}, {{ apartment.street }}</h2>
+                <p>מספר בניין: {{ apartment.buildingNum }}</p>
+                <p>קומה: {{ apartment.floorNum }}</p>
+                <p>מספר חדרים: {{ apartment.roomNum }}</p>
+                <p>מצב: {{ apartment.condition }}</p>
+
+                <p>
+                    {% if apartment.brokerage %}
+                        <span class="brokerage">בתיווך</span>
+                    {% else %}
+                        <span class="no-brokerage">ללא תיווך</span>
+                    {% endif %}
+                </p>
+                {% if apartment.img %}
+                    <img src="{{ apartment.img.url }}" alt="תמונה של הדירה">
+                {% endif %}
+
+                <form action="{% url 'request_form' apartment.id %}" method="get">
+                    <button type="submit">פנייה למוכר</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>כל הזכויות שמורות © 2025</p>
+    </footer>
+</body>
+</html>

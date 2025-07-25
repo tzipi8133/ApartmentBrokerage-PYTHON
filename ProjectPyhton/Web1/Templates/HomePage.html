@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת קניית ומכירת דירות</title>
+    <!-- הוספת Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            padding: 40px 30px;
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4e73df;
+        }
+        p.lead {
+            font-size: 1.2rem;
+            color: #495057;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 30px;
+        }
+        ul {
+            text-align: right;
+            color: #555;
+            font-size: 1rem;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        .btn-register {
+            background-color: #4e73df;
+            color: white;
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border-radius: 25px;
+            margin-top: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .btn-register:hover {
+            background-color: #2e59d9;
+        }
+    </style>
+</head>
+<body>
+    {% block header %}
+        {% include 'Navbar.html' %}
+    {% endblock %}
+
+    <div class="container">
+        <h1>ברוכים הבאים למערכת קניית ומכירת דירות</h1>
+        <p class="lead">
+            אתר זה מיועד לאנשים שמעוניינים למכור ו/או לקנות דירות.<br>
+            אם אתם מוכרים דירה, תוכלו לפרסם את הדירה שלכם ולתאר את כל הפרטים הדרושים.<br>
+            אם אתם מחפשים לקנות דירה, תוכלו לסנן את הדירות הזמינות ולפנות ישירות למוכרים.
+        </p>
+        <h2>כיצד זה עובד</h2>
+
+            <p>אם אתם מוכרים דירה, עליכם להירשם ולפרסם את הדירה שלכם עם כל הפרטים הנדרשים.</p>
+            <p>אם אתם קונים דירה, תוכלו לחפש את הדירות המפורסמות ולשלוח פנייה ישירות למוכר.</p>
+            <p>בעלים של דירה יכולים לעדכן את סטטוס הדירה למכירה או נמכרה.</p>
+        <p>עליכם להירשם לפני שתוכלו לגשת למערכת.</p>
+
+        <!-- כפתור שמפנה לעמוד ההרשמה -->
+        <a href="/register" class="btn btn-register">הירשם עכשיו</a>
+    </div>
+
+    <!-- הוספת קובץ JS של Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

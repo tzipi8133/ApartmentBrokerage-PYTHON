@@ -1,0 +1,22 @@
+<!-- templates/update_status.html -->
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>עדכון סטטוס דירה</title>
+</head>
+<body>
+    <h1>עדכון סטטוס לדירה</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="status">סטטוס:</label>
+        <select id="status" name="status">
+            <option value="למכירה" {% if apartment.condition == "false" %}selected{% endif %}>למכירה</option>
+            <option value="נמכר" {% if apartment.condition == "true" %}selected{% endif %}>נמכר</option>
+        </select>
+        <br>
+        <button type="submit">עדכן</button>
+    </form>
+    <a href="{% url 'apartment_list' %}">חזרה לרשימת הדירות</a>
+</body>
+</html>
